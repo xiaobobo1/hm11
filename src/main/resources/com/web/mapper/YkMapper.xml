@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.YkMapper">
+  <resultMap id="BaseResultMap" type="com.web.entity.Yk">
+    <id column="ykid" jdbcType="INTEGER" property="ykid" />
+    <result column="ykfzid" jdbcType="INTEGER" property="ykfzid" />
+    <result column="yklb" jdbcType="VARCHAR" property="yklb" />
+    <result column="area" jdbcType="DOUBLE" property="area" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ykid, ykfzid, yklb, area
+  </sql>
+  <select id="selectByExample" parameterType="com.web.entity.YkExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from yk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yk
+    where ykid = #{ykid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from yk
+    where ykid = #{ykid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.web.entity.YkExample">
+    delete from yk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.web.entity.Yk">
+    insert into yk (ykid,ykfzid, yklb, area
+      )
+    values (#{ykid,jdbcType=INTEGER},#{ykfzid,jdbcType=INTEGER}, #{yklb,jdbcType=VARCHAR}, #{area,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.web.entity.Yk">
+    <selectKey keyProperty="ykid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into yk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ykfzid != null">
+        ykfzid,
+      </if>
+      <if test="yklb != null">
+        yklb,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ykfzid != null">
+        #{ykfzid,jdbcType=INTEGER},
+      </if>
+      <if test="yklb != null">
+        #{yklb,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.web.entity.YkExample" resultType="java.lang.Long">
+    select count(*) from yk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update yk
+    <set>
+      <if test="record.ykid != null">
+        ykid = #{record.ykid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ykfzid != null">
+        ykfzid = #{record.ykfzid,jdbcType=INTEGER},
+      </if>
+      <if test="record.yklb != null">
+        yklb = #{record.yklb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update yk
+    set ykid = #{record.ykid,jdbcType=INTEGER},
+      ykfzid = #{record.ykfzid,jdbcType=INTEGER},
+      yklb = #{record.yklb,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=DOUBLE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.entity.Yk">
+    update yk
+    <set>
+      <if test="ykfzid != null">
+        ykfzid = #{ykfzid,jdbcType=INTEGER},
+      </if>
+      <if test="yklb != null">
+        yklb = #{yklb,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ykid = #{ykid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.web.entity.Yk">
+    update yk
+    set ykfzid = #{ykfzid,jdbcType=INTEGER},
+      yklb = #{yklb,jdbcType=VARCHAR},
+      area = #{area,jdbcType=DOUBLE}
+    where ykid = #{ykid,jdbcType=INTEGER}
+  </update>
+   <resultMap id="ykResultMap" type="com.web.entity.Yk">
+    <id column="ykid" jdbcType="INTEGER" property="ykid" />
+    <result column="ykfzid" jdbcType="INTEGER" property="ykfzid" />
+    <result column="yklb" jdbcType="VARCHAR" property="yklb" />
+    <result column="area" jdbcType="DOUBLE" property="area" />
+  </resultMap>
+  <select id="queryAll" resultMap="ykResultMap"> select * from yk </select>
+</mapper>

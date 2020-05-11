@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.DdMapper">
+  <resultMap id="BaseResultMap" type="com.web.entity.Dd">
+    <id column="ddid" jdbcType="INTEGER" property="ddid" />
+    <result column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="ddcount" jdbcType="INTEGER" property="ddcount" />
+    <result column="dhdate" jdbcType="VARCHAR" property="dhdate" />
+    <result column="jhdate" jdbcType="VARCHAR" property="jhdate" />
+    <result column="scaddress" jdbcType="VARCHAR" property="scaddress" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ddid, sid, ddcount, dhdate, jhdate, scaddress
+  </sql>
+  <select id="selectByExample" parameterType="com.web.entity.DdExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dd
+    where ddid = #{ddid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dd
+    where ddid = #{ddid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.web.entity.DdExample">
+    delete from dd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.web.entity.Dd">
+    insert into dd (ddid, sid, ddcount, dhdate, 
+      jhdate, scaddress)
+    values (#{ddid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{ddcount,jdbcType=INTEGER}, #{dhdate,jdbcType=VARCHAR}, 
+      #{jhdate,jdbcType=VARCHAR}, #{scaddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.web.entity.Dd">
+    <selectKey keyProperty="ddid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dd
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="ddcount != null">
+        ddcount,
+      </if>
+      <if test="dhdate != null">
+        dhdate,
+      </if>
+      <if test="jhdate != null">
+        jhdate,
+      </if>
+      <if test="scaddress != null">
+        scaddress,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="ddcount != null">
+        #{ddcount,jdbcType=INTEGER},
+      </if>
+      <if test="dhdate != null">
+        #{dhdate,jdbcType=VARCHAR},
+      </if>
+      <if test="jhdate != null">
+        #{jhdate,jdbcType=VARCHAR},
+      </if>
+      <if test="scaddress != null">
+        #{scaddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.web.entity.DdExample" resultType="java.lang.Long">
+    select count(*) from dd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dd
+    <set>
+      <if test="record.ddid != null">
+        ddid = #{record.ddid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sid != null">
+        sid = #{record.sid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ddcount != null">
+        ddcount = #{record.ddcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.dhdate != null">
+        dhdate = #{record.dhdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jhdate != null">
+        jhdate = #{record.jhdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scaddress != null">
+        scaddress = #{record.scaddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dd
+    set ddid = #{record.ddid,jdbcType=INTEGER},
+      sid = #{record.sid,jdbcType=INTEGER},
+      ddcount = #{record.ddcount,jdbcType=INTEGER},
+      dhdate = #{record.dhdate,jdbcType=VARCHAR},
+      jhdate = #{record.jhdate,jdbcType=VARCHAR},
+      scaddress = #{record.scaddress,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.entity.Dd">
+    update dd
+    <set>
+      <if test="sid != null">
+        sid = #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="ddcount != null">
+        ddcount = #{ddcount,jdbcType=INTEGER},
+      </if>
+      <if test="dhdate != null">
+        dhdate = #{dhdate,jdbcType=VARCHAR},
+      </if>
+      <if test="jhdate != null">
+        jhdate = #{jhdate,jdbcType=VARCHAR},
+      </if>
+      <if test="scaddress != null">
+        scaddress = #{scaddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ddid = #{ddid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.web.entity.Dd">
+    update dd
+    set sid = #{sid,jdbcType=INTEGER},
+      ddcount = #{ddcount,jdbcType=INTEGER},
+      dhdate = #{dhdate,jdbcType=VARCHAR},
+      jhdate = #{jhdate,jdbcType=VARCHAR},
+      scaddress = #{scaddress,jdbcType=VARCHAR}
+    where ddid = #{ddid,jdbcType=INTEGER}
+  </update>
+  <resultMap id="ddResultMap" type="com.web.entity.Dd">
+    <id column="ddid" jdbcType="INTEGER" property="ddid" />
+    <result column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="ddcount" jdbcType="INTEGER" property="ddcount" />
+    <result column="dhdate" jdbcType="VARCHAR" property="dhdate" />
+    <result column="jhdate" jdbcType="VARCHAR" property="jhdate" />
+    <result column="scaddress" jdbcType="VARCHAR" property="scaddress" />
+  </resultMap>
+     <select id="queryAll" resultMap="ddResultMap"> select * from dd </select>
+</mapper>

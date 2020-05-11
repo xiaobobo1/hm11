@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.DdxzMapper">
+  <resultMap id="BaseResultMap" type="com.web.entity.Ddxz">
+    <id column="ddxzid" jdbcType="INTEGER" property="ddxzid" />
+    <result column="ddid" jdbcType="INTEGER" property="ddid" />
+    <result column="ypid" jdbcType="INTEGER" property="ypid" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="guige" jdbcType="VARCHAR" property="guige" />
+    <result column="ddph" jdbcType="VARCHAR" property="ddph" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ddxzid, ddid, ypid, num, guige, ddph
+  </sql>
+  <select id="selectByExample" parameterType="com.web.entity.DdxzExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ddxz
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ddxz
+    where ddxzid = #{ddxzid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ddxz
+    where ddxzid = #{ddxzid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.web.entity.DdxzExample">
+    delete from ddxz
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.web.entity.Ddxz">
+    insert into ddxz (ddxzid, ddid, ypid, num, 
+      guige, ddph)
+    values (#{ddxzid,jdbcType=INTEGER}, #{ddid,jdbcType=INTEGER}, #{ypid,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, 
+      #{guige,jdbcType=VARCHAR}, #{ddph,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.web.entity.Ddxz">
+    <selectKey keyProperty="ddxzid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ddxz
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ddid != null">
+        ddid,
+      </if>
+      <if test="ypid != null">
+        ypid,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="guige != null">
+        guige,
+      </if>
+      <if test="ddph != null">
+        ddph,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ddid != null">
+        #{ddid,jdbcType=INTEGER},
+      </if>
+      <if test="ypid != null">
+        #{ypid,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="guige != null">
+        #{guige,jdbcType=VARCHAR},
+      </if>
+      <if test="ddph != null">
+        #{ddph,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.web.entity.DdxzExample" resultType="java.lang.Long">
+    select count(*) from ddxz
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ddxz
+    <set>
+      <if test="record.ddxzid != null">
+        ddxzid = #{record.ddxzid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ddid != null">
+        ddid = #{record.ddid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ypid != null">
+        ypid = #{record.ypid,jdbcType=INTEGER},
+      </if>
+      <if test="record.num != null">
+        num = #{record.num,jdbcType=INTEGER},
+      </if>
+      <if test="record.guige != null">
+        guige = #{record.guige,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ddph != null">
+        ddph = #{record.ddph,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ddxz
+    set ddxzid = #{record.ddxzid,jdbcType=INTEGER},
+      ddid = #{record.ddid,jdbcType=INTEGER},
+      ypid = #{record.ypid,jdbcType=INTEGER},
+      num = #{record.num,jdbcType=INTEGER},
+      guige = #{record.guige,jdbcType=VARCHAR},
+      ddph = #{record.ddph,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.entity.Ddxz">
+    update ddxz
+    <set>
+      <if test="ddid != null">
+        ddid = #{ddid,jdbcType=INTEGER},
+      </if>
+      <if test="ypid != null">
+        ypid = #{ypid,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="guige != null">
+        guige = #{guige,jdbcType=VARCHAR},
+      </if>
+      <if test="ddph != null">
+        ddph = #{ddph,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ddxzid = #{ddxzid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.web.entity.Ddxz">
+    update ddxz
+    set ddid = #{ddid,jdbcType=INTEGER},
+      ypid = #{ypid,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER},
+      guige = #{guige,jdbcType=VARCHAR},
+      ddph = #{ddph,jdbcType=VARCHAR}
+    where ddxzid = #{ddxzid,jdbcType=INTEGER}
+  </update>
+  <resultMap id="ddxzResultMap" type="com.web.entity.Ddxz">
+    <id column="ddxzid" jdbcType="INTEGER" property="ddxzid" />
+    <result column="ddid" jdbcType="INTEGER" property="ddid" />
+    <result column="ypid" jdbcType="INTEGER" property="ypid" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="guige" jdbcType="VARCHAR" property="guige" />
+    <result column="ddph" jdbcType="VARCHAR" property="ddph" />
+  </resultMap>
+   <select id="queryAll" resultMap="ddxzResultMap"> select * from ddxz </select>
+</mapper>
